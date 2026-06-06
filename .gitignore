@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 .idea/
 *.db
+TP.md
+COMO_USAR_DB.md
