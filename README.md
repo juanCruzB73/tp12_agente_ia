@@ -29,6 +29,8 @@ agente/
 │   └── doc_search.py         # Herramienta: buscar docs / explicar función
 │
 ├── persistence/
+    ├── db/
+    │ ├── db.py
 │   ├── __init__.py
 │   ├── database.py           # Conexión SQLite, init de tablas
 │   ├── session_repo.py       # CRUD de sesiones guardadas
