@@ -28,13 +28,14 @@ agente/
 │   ├── code_runner.py        # Herramienta: ejecutar código Python (sandbox)
 │   └── doc_search.py         # Herramienta: buscar docs / explicar función
 │
-├── persistence/
-    ├── db/
-    │ ├── db.py
-│   ├── __init__.py
-│   ├── database.py           # Conexión SQLite, init de tablas
-│   ├── session_repo.py       # CRUD de sesiones guardadas
-│   └── message_repo.py       # CRUD de mensajes por sesión
+├── persistance/
+│  ├── __init__.py          # exports de todo el módulo
+│  ├── user_repo.py         # create_user, get_user, get_or_create_user
+│  ├── chat_repo.py         # create_chat, list_chats, get_chat, update_chat_title, delete_chat
+│  ├── message_repo.py      # save_message, get_messages, delete_messages
+│  ├── session_repo.py      # start_session, end_session, get_session, list_sessions
+│  └── db/
+│      └── db.py            # get_connection(), init_db() + schema SQL
 │
 └── utils/
     ├── __init__.py
