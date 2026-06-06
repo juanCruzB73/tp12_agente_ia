@@ -39,3 +39,9 @@ agente/
     ├── config.py             # Carga .env, expone settings
     └── error_handler.py      # Manejo de excepciones de la API
 ```
+
+utils/config.py — carga el .env
+agent/prompts.py — el system prompt de Piloto
+chat/session.py — el historial
+agent/piloto.py — el orquestador que llama a la API
+main.py — el loop de consola
