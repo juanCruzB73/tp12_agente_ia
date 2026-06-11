@@ -1,15 +1,13 @@
 import google.generativeai as genai
-import os
+from utils.config import GEMINI_API_KEY
 
 class PilotoAgent:
     def __init__(self):
-        api_key = os.environ.get("GEMINI_API_KEY")
-        if not api_key:
+        if not GEMINI_API_KEY:
             raise ValueError("No se encontró GEMINI_API_KEY en las variables de entorno.")
         
-        genai.configure(api_key=api_key)
+        genai.configure(api_key=GEMINI_API_KEY)
 
-        # System prompt
         self.system_instruction = (
             "Sos un profesor de programación y tu nombre es Piloto. "
             "Respondés siempre en español y con un tono conciso, amigable pero profesional. "
@@ -19,13 +17,11 @@ class PilotoAgent:
             "Nunca entregues código que pueda ser dañino para la pc o el usuario."
         )
 
-        # Inicializar el modelo Gemini 1.5 Flash
         self.model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.0-flash",
             system_instruction=self.system_instruction
         )
 
-    # Si hay historial lo carga, si no empieza vacío
     def iniciar_sesion_chat(self, historial_previo=None):
         historial = historial_previo if historial_previo else []
         return self.model.start_chat(history=historial)
