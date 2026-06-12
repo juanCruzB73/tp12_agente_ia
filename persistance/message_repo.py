@@ -6,7 +6,7 @@ def save_message(chat_id: int, role: str, content: str) -> int:
 
     Args:
         chat_id: id del chat al que pertenece el mensaje.
-        role:    'user' o 'assistant' (valores que espera la API de Anthropic).
+        role:    'user' o 'assistant' (valores que espera la API de Grok).
         content: texto del mensaje.
     """
     with get_connection() as conn:
@@ -18,7 +18,7 @@ def save_message(chat_id: int, role: str, content: str) -> int:
 
 
 def get_messages(chat_id: int) -> list[dict]:
-    """Devuelve el historial de un chat en formato listo para la API de Anthropic.
+    """Devuelve el historial de un chat en formato listo para la API de GROK.
 
     Cada elemento tiene las claves 'role' y 'content', en orden cronológico.
     """

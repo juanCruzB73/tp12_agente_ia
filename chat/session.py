@@ -10,14 +10,7 @@ class ChatSessionManager:
 
     def load_session(self):
         db_messages = persistance.get_messages(self.chat_id)
-        history = []
-        for msg in db_messages:
-            role = "user" if msg["role"] == "user" else "model"
-            history.append({
-                "role": role,
-                "parts": [msg["content"]]
-            })
-        self.chat_session = self.agent.iniciar_sesion_chat(history)
+        self.chat_session = self.agent.iniciar_sesion_chat(db_messages)
 
     def send_message(self, text: str) -> str:
         persistance.save_message(self.chat_id, "user", text)

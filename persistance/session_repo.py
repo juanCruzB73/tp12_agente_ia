@@ -47,3 +47,13 @@ def list_sessions() -> list[dict]:
             "SELECT * FROM session ORDER BY started_at DESC"
         ).fetchall()
         return [dict(row) for row in rows]
+
+
+def get_last_session(chat_id: int) -> dict | None:
+    """Devuelve la última sesión de un chat, o None si nunca fue abierto."""
+    with get_connection() as conn:
+        row = conn.execute(
+            "SELECT * FROM session WHERE chat_id = ? ORDER BY started_at DESC LIMIT 1",
+            (chat_id,)
+        ).fetchone()
+        return dict(row) if row else None

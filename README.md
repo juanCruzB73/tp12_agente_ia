@@ -20,7 +20,6 @@ agente/
 │   ├── __init__.py
 │   ├── session.py            # Historial en memoria, add_message, clear
 │   └── commands.py           # /salir, /limpiar, /historial, etc.
-│
 ├── tools/
 │   ├── __init__.py
 │   ├── registry.py           # Lista de tools que se pasan a la API

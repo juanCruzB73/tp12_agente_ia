@@ -29,3 +29,19 @@ def get_or_create_user(name: str) -> int:
             return row["id"]
         cursor = conn.execute("INSERT INTO user (name) VALUES (?)", (name,))
         return cursor.lastrowid
+
+
+def get_default_user() -> int:
+    """Devuelve el id del primer usuario registrado, o crea uno por defecto si no existe."""
+    with get_connection() as conn:
+        row = conn.execute("SELECT id FROM user LIMIT 1").fetchone()
+        if row:
+            return row["id"]
+        cursor = conn.execute("INSERT INTO user (name) VALUES (?)", ("Usuario",))
+        return cursor.lastrowid
+
+
+def update_user_name(user_id: int, name: str) -> None:
+    """Actualiza el nombre de un usuario."""
+    with get_connection() as conn:
+        conn.execute("UPDATE user SET name = ? WHERE id = ?", (name, user_id))

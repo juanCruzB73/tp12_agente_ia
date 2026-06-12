@@ -1,9 +1,9 @@
 from .db.db import init_db
 
-from .user_repo import create_user, get_user, get_or_create_user
+from .user_repo import create_user, get_user, get_or_create_user, get_default_user, update_user_name
 from .chat_repo import create_chat, list_chats, get_chat, update_chat_title, delete_chat
 from .message_repo import save_message, get_messages, delete_messages
-from .session_repo import start_session, end_session, get_session, list_sessions
+from .session_repo import start_session, end_session, get_session, list_sessions, get_last_session
 
 __all__ = [
     # db
@@ -12,6 +12,8 @@ __all__ = [
     "create_user",
     "get_user",
     "get_or_create_user",
+    "get_default_user",
+    "update_user_name",
     # chat
     "create_chat",
     "list_chats",
@@ -27,4 +29,5 @@ __all__ = [
     "end_session",
     "get_session",
     "list_sessions",
+    "get_last_session",
 ]
