@@ -1,49 +1,91 @@
-# 🤖 Piloto — Agente IA de Programación
+# Piloto — Agente IA de Programación
 
-## 📁 Estructura del proyecto
+Agente conversacional especializado en programación, desarrollado con Python y la API de Groq (modelo llama-3.3-70b-versatile). Trabajo Práctico N.º 12 — Sistemas Inteligentes, UDA.
+
+## Instalación y configuración
+
+**1. Clonar el repositorio**
+```
+git clone https://github.com/juanCruzB73/tp12_agente_ia
+cd tp12_agente_ia
+```
+
+**2. Crear y activar el entorno virtual**
+```
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# Mac / Linux
+source .venv/bin/activate
+```
+
+**3. Instalar dependencias**
+```
+pip install -r requirements.txt
+```
+
+**4. Configurar la API key**
+
+Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+```
+GROQ_API_KEY=tu_api_key_aqui
+```
+
+La API key se obtiene gratis en https://console.groq.com
+
+**5. Ejecutar**
+```
+python main.py
+```
+
+## Uso
+
+Al iniciar por primera vez, Piloto pide el nombre del usuario y genera un título para la sesión basado en la primera pregunta. En sesiones siguientes muestra las conversaciones anteriores para retomar o iniciar una nueva.
+
+Comandos disponibles durante la conversación:
+- `/salir` — termina la sesión
+- `/limpiar` — borra el historial de la conversación actual
+
+## Estructura del proyecto
 
 ```
-agente/
-│
-├── main.py                   # Punto de entrada, loop principal
-├── .env                      # API key (gitignoreado)
-├── .env.example              # Plantilla sin valores reales (sí va al repo)
-├── requirements.txt          # Dependencias del proyecto
-├── README.md
+├── main.py                        # Punto de entrada y loop principal
+├── .env                           # API key (no se sube al repo)
+├── requirements.txt               # Dependencias
 │
 ├── agent/
-│   ├── __init__.py
-│   ├── piloto.py             # Orquestador: une todo, decide qué hacer
-│   └── prompts.py            # System prompt y constantes de texto
+│   └── __init__.py                # PilotoAgent: llama a la API, maneja herramientas y genera títulos
 │
 ├── chat/
 │   ├── __init__.py
-│   ├── session.py            # Historial en memoria, add_message, clear
-│   └── commands.py           # /salir, /limpiar, /historial, etc.
+│   ├── session.py                 # Carga el historial desde la BD y gestiona la conversación activa
+│   └── commands.py                # Manejo de comandos /salir y /limpiar
+│
 ├── tools/
-│   ├── __init__.py
-│   ├── registry.py           # Lista de tools que se pasan a la API
-│   ├── executor.py           # Despacha la tool_call al handler correcto
-│   ├── code_runner.py        # Herramienta: ejecutar código Python (sandbox)
-│   └── doc_search.py         # Herramienta: buscar docs / explicar función
+│   ├── code_runner.py             # Herramienta: ejecuta código Python en un subprocess
+│   └── doc_search.py              # Herramienta: busca documentación oficial de Python
 │
 ├── persistance/
-│  ├── __init__.py          # exports de todo el módulo
-│  ├── user_repo.py         # create_user, get_user, get_or_create_user
-│  ├── chat_repo.py         # create_chat, list_chats, get_chat, update_chat_title, delete_chat
-│  ├── message_repo.py      # save_message, get_messages, delete_messages
-│  ├── session_repo.py      # start_session, end_session, get_session, list_sessions
-│  └── db/
-│      └── db.py            # get_connection(), init_db() + schema SQL
+│   ├── __init__.py                # Exports del módulo
+│   ├── user_repo.py               # Operaciones sobre la tabla user
+│   ├── chat_repo.py               # Operaciones sobre la tabla chat
+│   ├── message_repo.py            # Operaciones sobre la tabla message
+│   ├── session_repo.py            # Operaciones sobre la tabla session
+│   └── db/
+│       └── db.py                  # Conexión SQLite y creación de tablas
 │
 └── utils/
-    ├── __init__.py
-    ├── config.py             # Carga .env, expone settings
-    └── error_handler.py      # Manejo de excepciones de la API
+    ├── config.py                  # Carga variables de entorno
+    └── error_handler.py           # Manejo de errores de la API
 ```
 
-utils/config.py — carga el .env
-agent/prompts.py — el system prompt de Piloto
-chat/session.py — el historial
-agent/piloto.py — el orquestador que llama a la API
-main.py — el loop de consola
+## Etapas implementadas
+
+| Etapa | Descripcion |
+|-------|-------------|
+| 1 — Conversacional basico | Conexion a la API, system prompt, historial de sesion, loop por consola |
+| 2 — Personalidad y robustez | Rechazo de temas fuera de dominio, comandos /salir y /limpiar, manejo de errores de API |
+| 3 — Function calling | Herramienta ejecutar_codigo y buscar_documentacion, invocadas autonomamente por el modelo |
+| 4 — Persistencia | Historial guardado en SQLite, recuperacion de conversaciones previas, tracking de sesiones |
